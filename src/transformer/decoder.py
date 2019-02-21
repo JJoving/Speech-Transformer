@@ -1,12 +1,15 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import sys
+import codecs
 
 from attention import MultiHeadAttention
 from module import PositionalEncoding, PositionwiseFeedForward
 from utils import (IGNORE_ID, get_attn_key_pad_mask, get_attn_pad_mask,
                    get_non_pad_mask, get_subsequent_mask, pad_list)
 
+sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
 
 class Decoder(nn.Module):
     ''' A decoder model with self attention mechanism. '''
@@ -211,6 +214,11 @@ class Decoder(nn.Module):
                     remained_hyps.append(hyp)
 
             hyps = remained_hyps
+            #print(char_list[2159])
+            #print(hyps)
+            #for x in hyp['yseq'][0, 1:]:
+            #    print(x)
+            #    print(int(x))
             if len(hyps) > 0:
                 print('remeined hypothes: ' + str(len(hyps)))
             else:

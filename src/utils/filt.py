@@ -4,6 +4,9 @@
 
 import sys
 import argparse
+import codecs
+
+sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -14,11 +17,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     vocab = set()
-    with open(args.filt) as vocabfile:
+    with open(args.filt, encoding="utf-8") as vocabfile:
         for line in vocabfile:
             vocab.add(line.strip())
-
-    with open(args.infile) as textfile:
+    with open(args.infile, encoding="utf-8") as textfile:
         for line in textfile:
             if args.exclude:
                 print(" ".join(
